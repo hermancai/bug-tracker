@@ -1,10 +1,14 @@
 {
-  "name": "group_34_project",
+  "name": "bug-tracker",
   "version": "1.0.0",
   "description": "cs-340 group 34 project",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "preinstall": "npx npm-force-resolutions"
+  },
+  "resolutions": {
+    "graceful-fs": "4.2.4"
   },
   "author": "group 34",
   "license": "ISC",
