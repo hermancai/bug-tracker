@@ -2,7 +2,7 @@
   "name": "group_34_project",
   "version": "1.0.0",
   "description": "cs-340 group 34 project",
-  "main": "user-dashboard.js",
+  "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
