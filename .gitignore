@@ -1,3 +1,4 @@
 node_modules
 bug-tracker/credentials.js
 bug-tracker/package-lock.json
+bug-tracker/todo.txt
