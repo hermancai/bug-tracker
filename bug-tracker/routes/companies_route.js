@@ -32,7 +32,7 @@ function displayCompanyPage(req, res, next) {
             });
         }
         context.companies = companyDbData;
-        res.render('add-company', context);
+        res.render('companies_view', context);
     });
 }
 

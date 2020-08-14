@@ -167,6 +167,10 @@ select {
     cursor: pointer;
 }
 
+.resetBtn {
+    color: red !important;
+}
+
 .div-label {
     padding-top: 5px;
 }

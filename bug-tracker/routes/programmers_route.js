@@ -35,7 +35,7 @@ function renderProgrammers(req, res, next) {
             });
         }
         context.programmers = programmersDbData;
-        res.render('add-programmer', context);
+        res.render('programmers_view', context);
     })
 }
 
