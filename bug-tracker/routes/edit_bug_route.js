@@ -111,7 +111,7 @@ function renderEditBug(req, res, next) {
                 context.editBug = editBugDbData[0];
                 context.programmers = programmersDbData;
                 context.projects = projectDbData;
-                res.render('edit-bug', context);
+                res.render('edit_bug_view', context);
             });
         });
     });

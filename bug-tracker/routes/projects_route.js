@@ -55,7 +55,7 @@ function renderProjects(req, res, next) {
             // After the 2 calls return, then populate the context array
             context.companies = companyDbData;
             context.projects = projectDbData;
-            res.render('add-project', context);
+            res.render('projects_view', context);
         });
     });
 }

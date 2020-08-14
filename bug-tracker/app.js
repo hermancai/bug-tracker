@@ -39,19 +39,19 @@ app.set('port', 50000);
 
 
 // MAIN BUG PAGE ROUTES
-app.use('/', require('./routes/bugs-page.js'));
+app.use('/', require('./routes/bugs_route.js'));
 
 // EDIT BUG PAGE ROUTES
-app.use('/edit-bug', require('./routes/edit-bug-page.js'));
+app.use('/edit-bug', require('./routes/edit_bug_route.js'));
 
 // PROGRAMMERS PAGE ROUTES
-app.use('/programmers', require('./routes/programmers-page.js'));
+app.use('/programmers', require('./routes/programmers_route.js'));
 
 // PROJECTS PAGE ROUTES
-app.use('/projects', require('./routes/projects-page.js'));
+app.use('/projects', require('./routes/projects_route.js'));
 
 // COMPANIES PAGE ROUTES
-app.use('/companies', require('./routes/company-page.js'));
+app.use('/companies', require('./routes/companies_route.js'));
 
 
 /* ERROR ROUTES -------------------------------------------------------------*/

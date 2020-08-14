@@ -470,20 +470,20 @@ let resetBtn = document.getElementById("reset-table");
 resetBtn.addEventListener('click', resetTable);
 
 function resetTable(event) {
-    let path = "/resetTable";
-    let req = new XMLHttpRequest();
-
     // Prompt the user for a confirmation before resetting the db
     let confirmVal;
     confirmVal = confirm("This button RESETS the database and repopulates it with sample data!\n\nPress cancel to abort.");
     if (!confirmVal) {
         event.preventDefault();
-        console.log("reset database canceled")
+        console.log("reset database canceled");
         return;
     } else {
         event.preventDefault();
 
         // Make the ajax request
+        let path = "/restoreTable";
+        let req = new XMLHttpRequest();
+
         req.open("POST", path, true);   
         req.setRequestHeader("Content-Type", "application/json");
         req.send(); 
