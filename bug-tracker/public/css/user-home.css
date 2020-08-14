@@ -15,13 +15,13 @@
     display: inline-block;
 }
 
-#search-form input, #search-form button, #clear-search, #reset-table {
+#search-form input, #search-form button, #clear-search {
     border: 0;
     vertical-align: middle;
     padding: 3px;
 }
 
-#search-form button, #clear-search, #reset-table {
+#search-form button, #clear-search {
     right: 0;
     left: 0;
     background-color: #2d7a99;
@@ -30,7 +30,7 @@
     height: 36px !important;
 }
 
-#search-form button:hover, #clear-search:hover, .update-btn:hover, #reset-table:hover{
+#search-form button:hover, #clear-search:hover, .update-btn:hover {
     background-color: #226078;
 } 
 
@@ -38,13 +38,6 @@
     margin-left: 16px;
     width: 70px;
     padding: 9px;
-    border-radius: 2px;
-}
-
-#reset-table {
-    margin-left: 16px;
-    padding: 9px;
-    width: 130px;
     border-radius: 2px;
 }
 

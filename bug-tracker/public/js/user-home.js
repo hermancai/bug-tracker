@@ -468,10 +468,8 @@ searchInput.addEventListener('keydown', function(event) {
 // Function to drop and repopulate all database tables
 let resetBtn = document.getElementById("reset-table");
 resetBtn.addEventListener('click', resetTable);
-let spinner2 = document.getElementById('spinner2');
-spinner2.style.visibility = "hidden";
 
-function resetTable() {
+function resetTable(event) {
     let path = "/resetTable";
     let req = new XMLHttpRequest();
 
@@ -479,10 +477,11 @@ function resetTable() {
     let confirmVal;
     confirmVal = confirm("This button RESETS the database and repopulates it with sample data!\n\nPress cancel to abort.");
     if (!confirmVal) {
+        event.preventDefault();
+        console.log("reset database canceled")
         return;
     } else {
-        // Display the spinner
-        spinner2.style.visibility = "visible";
+        event.preventDefault();
 
         // Make the ajax request
         req.open("POST", path, true);   
@@ -491,26 +490,12 @@ function resetTable() {
 
         req.addEventListener("load", () => {
             if (req.status >= 200 && req.status < 400) {
-                let response = JSON.parse(req.responseText);
-                let bugsArray = JSON.parse(req.responseText).bugs;
-
-                // Clear table before building search results
-                let tableBody = document.getElementById("table-body");
-                tableBody.innerHTML = '';
-
-                // Build rows for each bug if there is at least one result
-                bugsArray.forEach(element => {
-                    createRow(tableBody, element);
-                });
-
-                // Rehide the spinner
-                setTimeout(() => { spinner2.style.visibility = "hidden"; }, 1000);
-                updateChartReset();
+                location.reload();
             } 
             else {
-                console.error("Reset table request error.");
+                console.error("Reset database request error.");
             }
-        })
+        });
     }
 }
 
@@ -546,7 +531,7 @@ function printChart(fixedCount, brokenCount, countSize) {
         .style("opacity", 0.45);
 
     // Create the central percentage
-    centralText.text(d3.format(".0%")(fixedCount / countSize));
+    centralText.text(d3.format(".1%")(fixedCount / countSize));
 
     // Set the graph color scale
     let color = d3.scaleOrdinal()

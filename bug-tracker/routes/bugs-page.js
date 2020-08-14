@@ -6,7 +6,7 @@
 **               /deleteBug
 **               /searchBug
 **               /viewAllBugs
-**               /resetTable
+**               /restoreTable
 **************************************************************/
 
 const express = require('express');
@@ -327,18 +327,9 @@ function viewAllBugs(req, res, next) {
 }
 
 
-// BUGS MAIN PAGE RESET TABLES - Function to drop and repopulate database
-function resetTable(req, res, next) {
-    // Query to display the table after reset
-    let viewAllQuery = `SELECT p.firstName, p.lastName, b.bugId, pj.projectName, b.bugSummary, b.bugDescription, 
-                        b.dateStarted, b.resolution, b.priority, b.fixed 
-                        FROM Programmers p 
-                        JOIN Bugs_Programmers bp ON p.programmerId = bp.programmerId
-                        JOIN Bugs b ON bp.bugId = b.bugId
-                        LEFT OUTER JOIN Projects pj ON b.projectId <=> pj.projectId
-                            ORDER BY bugId`;
-
-    let recreateQuery = require('../sql/reset_database.js');
+// BUGS MAIN PAGE RESTORE TABLES - Function to drop and repopulate database
+function restoreTable(req, res, next) {
+    let recreateQuery = require('../sql/restore_database.js');
     const mysql = req.app.get('mysql');                 
     
     mysql.pool.query(recreateQuery, (err, result) => {
@@ -346,47 +337,9 @@ function resetTable(req, res, next) {
             next(err);
             return;
         }
-
-        const mysql = req.app.get('mysql');                 
-        let context = {};
-
-        mysql.pool.query(viewAllQuery, (err, result) => {
-            if(err) {
-                next(err);
-                return;
-            }
-
-            let rows = result;
-            let prevEntryBugId;
-            let bugProgrammers = [];
-            let matchingBugsData = [];
-
-            for (let i in rows) {
-                if (prevEntryBugId == rows[i].bugId) {
-                    bugProgrammers.push(rows[i].firstName + ' ' + rows[i].lastName);
-                }
-                else {
-                    prevEntryBugId = rows[i].bugId;
-                    bugProgrammers = [];
-                    bugProgrammers.push(rows[i].firstName + ' ' + rows[i].lastName);
-
-                    matchingBugsData.push({
-                        bugId: rows[i].bugId,
-                        bugSummary: rows[i].bugSummary,
-                        bugDescription: rows[i].bugDescription,
-                        projectName: rows[i].projectName,
-                        programmers: bugProgrammers,
-                        dateStarted: rows[i].dateStarted,
-                        priority: rows[i].priority,
-                        fixed: rows[i].fixed,
-                        resolution: rows[i].resolution
-                    }) 
-                }
-            }
-
-            context.bugs = matchingBugsData;
-            res.send(JSON.stringify(context));
-        });
+                
+        let context = { result: "Restore database successful."};
+        res.send(JSON.stringify(context));
     })
 }
 
@@ -398,6 +351,6 @@ router.post('/insertBug', submitBug);
 router.post('/deleteBug', deleteBug);
 router.post('/searchBug', searchBug);
 router.post('/viewAllBugs', viewAllBugs);
-router.post('/resetTable', resetTable);
+router.post('/restoreTable', restoreTable);
 
 module.exports = router;
