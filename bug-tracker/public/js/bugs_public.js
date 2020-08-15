@@ -568,8 +568,13 @@ function printChart(fixedCount, brokenCount, countSize) {
         .style("opacity", 0.45);
 
     // Create the central percentage
-    centralText.text(d3.format(".1%")(fixedCount / countSize));
-
+    if (countSize == 0) {
+        document.getElementById("my_dataviz").innerHTML = "<br><br><font size='12'>No Bugs</font>";
+        return;
+    } else {
+        centralText.text(d3.format(".0%")(fixedCount / countSize));
+    }
+    
     // Set the graph color scale
     let color = d3.scaleOrdinal()
         .domain(data)
