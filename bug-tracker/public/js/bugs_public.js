@@ -463,19 +463,19 @@ searchInput.addEventListener('keydown', function(event) {
 });
 
 
-/* RESET DATABASE CLIENT SIDE ---------------------------------------------- */
+/* RESTORE DATABASE CLIENT SIDE ---------------------------------------------- */
 
 // Function to drop and repopulate all database tables
-let resetBtn = document.getElementById("reset-table");
-resetBtn.addEventListener('click', resetTable);
+let resetBtn = document.getElementById("restore-table");
+resetBtn.addEventListener('click', restoreTable);
 
-function resetTable(event) {
-    // Prompt the user for a confirmation before resetting the db
+function restoreTable(event) {
+    // Prompt the user for a confirmation before restoring the db
     let confirmVal;
-    confirmVal = confirm("This button RESETS the database and repopulates it with sample data!\n\nPress cancel to abort.");
+    confirmVal = confirm("The database will be cleared and repopulated with sample data.\n\nPress cancel to abort.");
     if (!confirmVal) {
         event.preventDefault();
-        console.log("reset database canceled");
+        console.log("restore database canceled");
         return;
     } else {
         event.preventDefault();
@@ -494,6 +494,43 @@ function resetTable(event) {
             } 
             else {
                 console.error("Reset database request error.");
+            }
+        });
+    }
+}
+
+
+/* CLEAR DATABASE CLIENT SIDE ---------------------------------------------- */
+
+// Function to clear database
+let clearBtn = document.getElementById("clear-table");
+clearBtn.addEventListener('click', clearTable);
+
+function clearTable(event) {
+    // Prompt the user for a confirmation before clearing the db
+    let confirmVal;
+    confirmVal = confirm("All data will be removed from the database.\n\nPress cancel to abort.");
+    if (!confirmVal) {
+        event.preventDefault();
+        console.log("clear database canceled");
+        return;
+    } else {
+        event.preventDefault();
+
+        // Make the ajax request
+        let path = "/clearTable";
+        let req = new XMLHttpRequest();
+
+        req.open("POST", path, true);   
+        req.setRequestHeader("Content-Type", "application/json");
+        req.send(); 
+
+        req.addEventListener("load", () => {
+            if (req.status >= 200 && req.status < 400) {
+                location.reload();
+            } 
+            else {
+                console.error("Clear database request error.");
             }
         });
     }
@@ -531,8 +568,13 @@ function printChart(fixedCount, brokenCount, countSize) {
         .style("opacity", 0.45);
 
     // Create the central percentage
-    centralText.text(d3.format(".1%")(fixedCount / countSize));
-
+    if (countSize == 0) {
+        document.getElementById("my_dataviz").innerHTML = "<br><br><font size='12'>No Bugs</font>";
+        return;
+    } else {
+        centralText.text(d3.format(".0%")(fixedCount / countSize));
+    }
+    
     // Set the graph color scale
     let color = d3.scaleOrdinal()
         .domain(data)
