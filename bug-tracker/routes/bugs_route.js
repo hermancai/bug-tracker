@@ -338,7 +338,24 @@ function restoreTable(req, res, next) {
             return;
         }
                 
-        let context = { result: "Restore database successful."};
+        let context = { result: "Restore database successful." };
+        res.send(JSON.stringify(context));
+    })
+}
+
+
+// BUGS MAIN PAGE CLEAR TABLES - Function to clear all data in database
+function clearTable(req, res, next) {
+    let clearQuery = require('../sql/clear_database.js');
+    const mysql = req.app.get('mysql');
+
+    mysql.pool.query(clearQuery, (err, result) => {
+        if(err) {
+            next(err);
+            return;
+        }
+
+        let context = { result: "Clear database successful." };
         res.send(JSON.stringify(context));
     })
 }
@@ -352,5 +369,6 @@ router.post('/deleteBug', deleteBug);
 router.post('/searchBug', searchBug);
 router.post('/viewAllBugs', viewAllBugs);
 router.post('/restoreTable', restoreTable);
+router.post('/clearTable', clearTable);
 
 module.exports = router;
