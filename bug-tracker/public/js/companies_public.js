@@ -55,3 +55,40 @@ recordForm.addEventListener('submit', (e) => {
 
     req.send(reqBody);
 });
+
+
+/* DELETE COMPANY CLIENT SIDE -------------------------------------------------- */
+
+// Function call to delete a row from companies
+function deleteCompany(tbl, curRow, companyId) {
+    console.log("function called");
+    let table = document.getElementById(tbl);
+    let rowCount = table.rows.length;
+    let req = new XMLHttpRequest();
+    let path = "/deleteCompany";
+
+    reqBody = JSON.stringify({companyId: companyId});
+
+    req.open("POST", path, true);
+    req.setRequestHeader("Content-Type", "application/json");
+
+    req.addEventListener("load", () => {
+        if (req.status >= 200 && req.status < 400) {
+            for (let i = 0; i < rowCount; i++) {
+                let row = table.rows[i]; 
+        
+                if (row == curRow.parentNode.parentNode) {
+                    table.deleteRow(i);
+                    return;
+                }
+            }
+        } 
+        else {
+            console.error("Delete request error: " + req.status);
+            console.log(path + companyId)
+        }
+    });
+
+    console.log("request sent")
+    req.send(reqBody);
+} 

@@ -21,7 +21,7 @@
 
                     <div><label class="div-label" for="bug-project">Project</label></div>
                     <div>
-                        <select class="submitBtn" required name="bugProject" id="bug-project-field">
+                        <select class="hover-pointer" required name="bugProject" id="bug-project-field">
                             <option value="" disabled selected>Select a project</option>
                             <option value="null">NULL</option>
                             {{#each projects}}
@@ -47,11 +47,11 @@
                     </div>
 
                     <div><label class="div-label" for="bug-start-date">Date Started</label></div>
-                    <div><input  class="submitBtn" required type="date" name="bugStartDate" id="bug-start-date-field" placeholder="yyyy-mm-dd"></div>
+                    <div><input  class="hover-pointer" required type="date" name="bugStartDate" id="bug-start-date-field" placeholder="yyyy-mm-dd"></div>
 
                     <div><label class="div-label" for="bug-priority">Priority</label></div>
                     <div>
-                        <select class="submitBtn" name="bugPriority" id="bug-priority-field" required>
+                        <select class="hover-pointer" name="bugPriority" id="bug-priority-field" required>
                             <option value="" disabled selected>Select a priority (Highest: 5)</option>
                             <option value="1">1</option>
                             <option value="2">2</option>
@@ -72,7 +72,7 @@
                     <div><label class="textarea-label div-label" for="bug-resolution">Resolution</label></div>
                     <div><textarea name="bugResolution" id="bug-resolution-field"></textarea></div>
                     
-                    <input type="submit" class="submitBtn" id="save" value="Add" onclick="checkBoxChecked()">
+                    <input type="submit" class="hover-pointer" id="save" value="Add" onclick="checkBoxChecked()">
                     <div id="spinner" class = "mdl-spinner mdl-spinner--single-color mdl-js-spinner is-active"></div>
                 </div>
             </form>
@@ -106,13 +106,13 @@
       <div id="search-container">
         <form id="search-form">
             <input id="search-input" type="text" placeholder="Search bug summaries, descriptions, and resolutions." name="search">
-            <button class="submitBtn" id="search-btn" type="button">
+            <button class="hover-pointer" id="search-btn" type="button">
                 <i class="material-icons">search</i>
             </button>
         </form>
         
-        <button class="submitBtn" id="clear-search">View All</button>
-        {{!-- <button class="submitBtn" id="reset-table">Restore Database</button> --}}
+        <button class="hover-pointer" id="clear-search">View All</button>
+        {{!-- <button class="hover-pointer" id="reset-table">Restore Database</button> --}}
         {{!-- <div id="spinner2" class="mdl-spinner mdl-spinner--single-color mdl-js-spinner is-active"></div> --}}
       </div>
       
@@ -146,12 +146,12 @@
                     <td>{{this.priority}}</td>
                     <td class="bugFixed">{{#if this.fixed}} Yes {{else}} No {{/if}}</td>
                     <td class="mdl-data-table__cell--non-numeric"><div class="user-text">{{this.resolution}}</div></td>
-                    <td><a class="update-btn" href="/edit-bug?bugId={{this.bugId}}">Update</a></td>
+                    <td><a class="option-btn" href="/edit-bug?bugId={{this.bugId}}">Update</a></td>
                     <td>
                         <input 
                             type="button" 
                             value="Delete" 
-                            class="update-btn" 
+                            class="option-btn" 
                             onclick="deleteBug('recordTable', this, {{this.bugId}})"
                         >
                     </td>

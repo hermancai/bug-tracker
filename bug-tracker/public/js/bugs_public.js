@@ -247,16 +247,18 @@ function deleteBug(tbl, curRow, bugId) {
 
     req.open("POST", path, true);
     req.setRequestHeader("Content-Type", "application/json");
+    
     req.addEventListener("load", () => {
         if (req.status >= 200 && req.status < 400) {
             for (let i = 0; i < rowCount; i++) {
-                let row = table.rows[i];
+                let row = table.rows[i]; 
         
                 if (row == curRow.parentNode.parentNode) {
                     table.deleteRow(i);
+                    updateChartDelete();
+                    return;
                 }
             }
-            updateChartDelete();
         } 
         else {
             console.error("Delete request error");

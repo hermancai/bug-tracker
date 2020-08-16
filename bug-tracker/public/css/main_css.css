@@ -163,8 +163,8 @@ select {
 
 /* Submit buttons ------------------------------------------------------------- */
 
-.submitBtn {
-    cursor: pointer;
+.hover-pointer {
+    cursor: pointer; 
 }
 
 .resetBtn {
@@ -173,4 +173,18 @@ select {
 
 .div-label {
     padding-top: 5px;
+}
+
+.option-btn {
+    background-color: #2d7a99;
+    border: none;
+    cursor: pointer;
+    border-radius: 2px;
+    padding: 5px;
+    text-decoration: none;
+    color: #fff;
+}
+
+.option-btn:hover {
+    background-color: #226078;
 }
