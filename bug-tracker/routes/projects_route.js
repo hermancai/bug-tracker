@@ -82,9 +82,36 @@ function submitProject(req, res, next) {
                 return;
             }
             
-            context.projects = result.insertId;
+            context.id = result.insertId;
             res.send(JSON.stringify(context));
         });
+}
+
+
+// PROJECTS PAGE DELETE ROW - Route to delete a row from the project list
+function deleteProject(req, res, next) {
+    // Delete the row with the passed in projectId
+    let sql_query_1 = `DELETE FROM Projects WHERE projectId=?`;
+    let sql_query_2 = `SELECT * FROM Projects`;
+
+    const mysql = req.app.get('mysql');
+    var context = {};
+
+    mysql.pool.query(sql_query_1, [req.body.projectId], (err, result) => {
+        if (err) {
+            next(err);
+            return;
+        }
+
+        mysql.pool.query(sql_query_2, (err, rows) => {
+            if (err) {
+                next(err);
+                return;
+            }
+            context.results = JSON.stringify(rows);
+            res.render('projects_view', context);
+        });
+    });
 }
 
 
@@ -92,5 +119,6 @@ function submitProject(req, res, next) {
 
 router.get('/', renderProjects);
 router.post('/insertProject', submitProject);
+router.post('/deleteProject', deleteProject);
 
 module.exports = router;
