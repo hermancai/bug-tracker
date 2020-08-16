@@ -30,7 +30,7 @@
     height: 36px !important;
 }
 
-#search-form button:hover, #clear-search:hover, .update-btn:hover {
+#search-form button:hover, #clear-search:hover {
     background-color: #226078;
 } 
 
@@ -44,16 +44,6 @@
 #search-form input {
     width: 420px;
     padding: 5px;
-}
-
-.update-btn {
-    background-color: #2d7a99;
-    border: none;
-    cursor: pointer;
-    border-radius: 2px;
-    padding: 5px;
-    text-decoration: none;
-    color: #fff;
 }
 
 .mdl-data-table {
