@@ -58,7 +58,6 @@ function submitCompany(req, res, next) {
 // COMPANIES PAGE DELETE ROW - Route to delete a row from the company list
 function deleteCompany(req, res, next) {
     // Delete the row with the passed in companyId
-    console.log("here1")
     let sql_query_1 = `DELETE FROM Companies WHERE companyId=?`;
     let sql_query_2 = `SELECT * FROM Companies`;
 
@@ -70,14 +69,13 @@ function deleteCompany(req, res, next) {
             next(err);
             return;
         }
-        console.log("here2")
+
         mysql.pool.query(sql_query_2, (err, rows) => {
             if (err) {
                 next(err);
                 return;
             }
             context.results = JSON.stringify(rows);
-            console.log("here3");
             res.render('companies_view', context);
         });
     });

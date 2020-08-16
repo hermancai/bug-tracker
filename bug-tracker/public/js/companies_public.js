@@ -44,6 +44,16 @@ recordForm.addEventListener('submit', (e) => {
             dateCell.textContent = recordForm.elements.dateJoined.value;
             newRow.appendChild(dateCell);
 
+            // Delete button element
+            let deleteCell = document.createElement('td');
+            newRow.appendChild(deleteCell);
+            let deleteBtn = document.createElement('a');
+            deleteCell.appendChild(deleteBtn);
+            deleteBtn.type = "button";
+            deleteBtn.text = "Delete";
+            deleteBtn.className = "option-btn";
+            deleteBtn.setAttribute('onclick', `deleteCompany('recordTable', this, ${response.id})`);
+
             // Clear the submit form and stop spinner
             document.getElementById('recordForm').reset();
             setTimeout(() => { spinner.style.visibility = "hidden"; }, 1000);
@@ -61,11 +71,10 @@ recordForm.addEventListener('submit', (e) => {
 
 // Function call to delete a row from companies
 function deleteCompany(tbl, curRow, companyId) {
-    console.log("function called");
     let table = document.getElementById(tbl);
     let rowCount = table.rows.length;
     let req = new XMLHttpRequest();
-    let path = "/deleteCompany";
+    let path = "/companies/deleteCompany";
 
     reqBody = JSON.stringify({companyId: companyId});
 
@@ -89,6 +98,5 @@ function deleteCompany(tbl, curRow, companyId) {
         }
     });
 
-    console.log("request sent")
     req.send(reqBody);
 } 
