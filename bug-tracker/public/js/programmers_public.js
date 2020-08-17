@@ -30,7 +30,6 @@ recordForm.addEventListener('submit', (e) => {
     req.addEventListener('load', () => {
         if (req.status >= 200 && req.status < 400) {
             let response = JSON.parse(req.responseText);
-            let id = response.projects;
 
             // Table of database records for the added companies
             let tbl = document.getElementById('recordTable');
@@ -58,6 +57,16 @@ recordForm.addEventListener('submit', (e) => {
             levelCell.textContent = recordForm.elements.programmerAccess.value;
             newRow.appendChild(levelCell);
 
+            // Delete button element
+            let deleteCell = document.createElement('td');
+            newRow.appendChild(deleteCell);
+            let deleteBtn = document.createElement('a');
+            deleteCell.appendChild(deleteBtn);
+            deleteBtn.type = "button";
+            deleteBtn.text = "Delete";
+            deleteBtn.className = "option-btn";
+            deleteBtn.setAttribute('onclick', `deleteProgrammer('recordTable', this, ${response.id})`);
+
             // Clear the submit form
             document.getElementById('recordForm').reset();
             setTimeout(() => { spinner.style.visibility = "hidden"; }, 1000);
@@ -68,3 +77,37 @@ recordForm.addEventListener('submit', (e) => {
     });
     req.send(reqBody);
 });
+
+
+/* DELETE PROGRAMMER CLIENT SIDE -------------------------------------------------- */
+
+// Function call to delete a row from programmers
+function deleteProgrammer(tbl, curRow, programmerId) {
+    let table = document.getElementById(tbl);
+    let rowCount = table.rows.length;
+    let req = new XMLHttpRequest();
+    let path = "/programmers/deleteProgrammer";
+
+    reqBody = JSON.stringify({programmerId: programmerId});
+
+    req.open("POST", path, true);
+    req.setRequestHeader("Content-Type", "application/json");
+
+    req.addEventListener("load", () => {
+        if (req.status >= 200 && req.status < 400) {
+            for (let i = 0; i < rowCount; i++) {
+                let row = table.rows[i]; 
+        
+                if (row == curRow.parentNode.parentNode) {
+                    table.deleteRow(i);
+                    return;
+                }
+            }
+        } 
+        else {
+            console.error("Delete request error: " + req.status);
+        }
+    });
+
+    req.send(reqBody);
+} 
