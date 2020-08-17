@@ -83,31 +83,35 @@ recordForm.addEventListener('submit', (e) => {
 
 // Function call to delete a row from programmers
 function deleteProgrammer(tbl, curRow, programmerId) {
-    let table = document.getElementById(tbl);
-    let rowCount = table.rows.length;
-    let req = new XMLHttpRequest();
-    let path = "/programmers/deleteProgrammer";
+    let confirmVal = confirm("Related bugs will also be deleted.");
 
-    reqBody = JSON.stringify({programmerId: programmerId});
+    if(confirmVal) {
+        let table = document.getElementById(tbl);
+        let rowCount = table.rows.length;
+        let req = new XMLHttpRequest();
+        let path = "/programmers/deleteProgrammer";
 
-    req.open("POST", path, true);
-    req.setRequestHeader("Content-Type", "application/json");
+        reqBody = JSON.stringify({programmerId: programmerId});
 
-    req.addEventListener("load", () => {
-        if (req.status >= 200 && req.status < 400) {
-            for (let i = 0; i < rowCount; i++) {
-                let row = table.rows[i]; 
-        
-                if (row == curRow.parentNode.parentNode) {
-                    table.deleteRow(i);
-                    return;
+        req.open("POST", path, true);
+        req.setRequestHeader("Content-Type", "application/json");
+
+        req.addEventListener("load", () => {
+            if (req.status >= 200 && req.status < 400) {
+                for (let i = 0; i < rowCount; i++) {
+                    let row = table.rows[i]; 
+            
+                    if (row == curRow.parentNode.parentNode) {
+                        table.deleteRow(i);
+                        return;
+                    }
                 }
+            } 
+            else {
+                console.error("Delete request error: " + req.status);
             }
-        } 
-        else {
-            console.error("Delete request error: " + req.status);
-        }
-    });
+        });
 
-    req.send(reqBody);
-} 
+        req.send(reqBody);
+    }
+};

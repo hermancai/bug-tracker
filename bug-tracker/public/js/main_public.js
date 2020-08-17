@@ -25,7 +25,7 @@ function restoreTable(event) {
 
         req.addEventListener("load", () => {
             if (req.status >= 200 && req.status < 400) {
-                location.reload();
+                window.location.replace('/');
             } 
             else {
                 console.error("Reset database request error: " + req.status);
@@ -62,7 +62,7 @@ function clearTable(event) {
 
         req.addEventListener("load", () => {
             if (req.status >= 200 && req.status < 400) {
-                location.reload();
+                window.location.replace('/');
             } 
             else {
                 console.error("Clear database request error: " + req.status);
