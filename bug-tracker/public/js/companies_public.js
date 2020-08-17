@@ -71,32 +71,36 @@ recordForm.addEventListener('submit', (e) => {
 
 // Function call to delete a row from companies
 function deleteCompany(tbl, curRow, companyId) {
-    let table = document.getElementById(tbl);
-    let rowCount = table.rows.length;
-    let req = new XMLHttpRequest();
-    let path = "/companies/deleteCompany";
+    let confirmVal = confirm("Related projects and bugs will also be deleted.");
 
-    reqBody = JSON.stringify({companyId: companyId});
+    if(confirmVal) {
+        let table = document.getElementById(tbl);
+        let rowCount = table.rows.length;
+        let req = new XMLHttpRequest();
+        let path = "/companies/deleteCompany";
 
-    req.open("POST", path, true);
-    req.setRequestHeader("Content-Type", "application/json");
+        reqBody = JSON.stringify({companyId: companyId});
 
-    req.addEventListener("load", () => {
-        if (req.status >= 200 && req.status < 400) {
-            for (let i = 0; i < rowCount; i++) {
-                let row = table.rows[i]; 
-        
-                if (row == curRow.parentNode.parentNode) {
-                    table.deleteRow(i);
-                    return;
+        req.open("POST", path, true);
+        req.setRequestHeader("Content-Type", "application/json");
+
+        req.addEventListener("load", () => {
+            if (req.status >= 200 && req.status < 400) {
+                for (let i = 0; i < rowCount; i++) {
+                    let row = table.rows[i]; 
+            
+                    if (row == curRow.parentNode.parentNode) {
+                        table.deleteRow(i);
+                        return;
+                    }
                 }
+            } 
+            else {
+                console.error("Delete request error: " + req.status);
+                console.log(path + companyId)
             }
-        } 
-        else {
-            console.error("Delete request error: " + req.status);
-            console.log(path + companyId)
-        }
-    });
+        });
 
-    req.send(reqBody);
+        req.send(reqBody);
+    }
 } 

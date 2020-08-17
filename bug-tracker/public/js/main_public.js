@@ -6,11 +6,11 @@ resetBtn.addEventListener('click', restoreTable);
 
 function restoreTable(event) {
     // Prompt the user for a confirmation before restoring the db
-    let confirmVal;
-    confirmVal = confirm("The database will be cleared and repopulated with sample data.\n\nPress cancel to abort.");
+    let confirmVal = confirm("The database will be cleared and repopulated with sample data.");
+
     if (!confirmVal) {
         event.preventDefault();
-        console.log("restore database canceled");
+        console.log("Restore database canceled.");
         return;
     } else {
         event.preventDefault();
@@ -28,7 +28,7 @@ function restoreTable(event) {
                 location.reload();
             } 
             else {
-                console.error("Reset database request error.");
+                console.error("Reset database request error: " + req.status);
             }
         });
     }
@@ -43,11 +43,11 @@ clearBtn.addEventListener('click', clearTable);
 
 function clearTable(event) {
     // Prompt the user for a confirmation before clearing the db
-    let confirmVal;
-    confirmVal = confirm("All data will be removed from the database.\n\nPress cancel to abort.");
+    let confirmVal = confirm("All data will be removed from the database.");
+
     if (!confirmVal) {
         event.preventDefault();
-        console.log("clear database canceled");
+        console.log("Clear database canceled.");
         return;
     } else {
         event.preventDefault();
@@ -65,7 +65,7 @@ function clearTable(event) {
                 location.reload();
             } 
             else {
-                console.error("Clear database request error.");
+                console.error("Clear database request error: " + req.status);
             }
         });
     }
