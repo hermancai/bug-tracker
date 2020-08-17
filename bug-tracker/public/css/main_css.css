@@ -188,3 +188,8 @@ select {
 .option-btn:hover {
     background-color: #226078;
 }
+
+#header-div {
+    overflow-x: hidden;
+    overflow-y: hidden;
+}
